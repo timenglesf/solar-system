@@ -52,7 +52,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout Repository
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Setup NodeJS Version - 20
         uses: actions/setup-node@v3
