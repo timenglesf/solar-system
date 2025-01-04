@@ -6,7 +6,8 @@ on:
     branches:
       - main
       - 'feature/*'
-    
+      - 'feat/*'
+
 jobs:
     unit-testing:
         name: Unit Testing
