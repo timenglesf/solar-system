@@ -43,7 +43,7 @@ jobs:
         run: npm test
 
       - name: Archive Test Result
-        if: ${{ failure() }}
+        if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: Mocha-Test-Result
