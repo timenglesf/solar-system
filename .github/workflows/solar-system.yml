@@ -87,8 +87,8 @@ jobs:
     needs: [unit-testing, code-coverage]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "$GITHUB_CONTEXT"
-      - run: echo ${{ github.ref}}
+      - run: echo ${{ github }}
+      - run: echo ${{ github.ref_name }}
       - name: Checkout Repository
         uses: actions/checkout@v4
 
