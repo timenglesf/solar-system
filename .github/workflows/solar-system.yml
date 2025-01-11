@@ -85,6 +85,8 @@ jobs:
   docker:
     name: Containerization
     needs: [unit-testing, code-coverage]
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.event.release.tag_name }}
