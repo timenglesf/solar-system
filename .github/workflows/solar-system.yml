@@ -62,14 +62,19 @@ jobs:
   code-coverage:
     name: Code Coverage
     runs-on: ubuntu-latest
+    container:
+      image: node:20
+    services:
+      mongo-db:
+        image: siddharth67/mongo-db:no-prod
+        options: --name mongo
+    env:
+      MONGO_URI: "mongodb://mongo:27017/superData"
+      MONGO_USERNAME: ${{ vars.DB_NONPROD_USER }}
+      MONGO_PASSWORD: ${{ secrets.DB_NONPROD_PASS }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Setup NodeJS Version - 20
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
 
       - name: Cache NPM Dependencies
         uses: actions/cache@v4
