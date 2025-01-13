@@ -159,7 +159,7 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
         with:
-          version: "1.26.0"
+          version: "v1.26.0"
 
       - name: Fetch cluster information
         run: |
