@@ -192,3 +192,22 @@ jobs:
       - name: Check that Tokens were replaced
         run: |
           cat kubernetes/development/*.yaml
+
+      - name: Check if mongo-db-creds exists
+        run: |
+          kubectl -n development get secret mongo-db-creds
+
+      - name: Create mongo-db-creds
+        if: ${{ failure() }}
+        run: |
+          kubectl -n ${{ vars.NAMESPACE }} create secret generic \
+            --from-literal=MONGO_USERNAME=${{ vars.MONGO_USERNAME }} \
+            --from-literal=MONGO_URI=${{ vars.MONGO_URI }} \ 
+            --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+            --save-config \
+            --dry-run=client \
+            - o yaml | kubectl apply -f -
+
+      - name: Apply manifest files
+        run: |
+          kubectl apply -f kubernetes/development
