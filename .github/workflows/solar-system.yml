@@ -211,7 +211,7 @@ jobs:
           echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress -o jsonpath='{.items[0].spec.tls[0].hosts[0]}')" >> $GITHUB_OUTPUT
 
   integration-test:
-    needs: deploy
+    needs: dev-deploy
     runs-on: ubuntu-latest
     env:
       URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_HOST }}
