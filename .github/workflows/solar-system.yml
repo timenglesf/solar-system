@@ -152,6 +152,8 @@ jobs:
   dev-depoloy:
     needs: docker
     runs-on: ubuntu-latest
+    outputs:
+      APP_INGRESS_HOST: ${{ steps.ingress_host.outputs.APP_INGRESS_HOST }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -202,3 +204,20 @@ jobs:
       - name: Apply manifest files
         run: |
           kubectl apply -f kubernetes/development
+
+      - name: Set APP_INGRESS_HOST Output
+        id: ingress_host
+        run: |
+          echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress -o jsonpath='{.items[0].spec.tls[0].hosts[0]}')" >> $GITHUB_OUTPUT
+
+  integration-test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_HOST }}
+    steps:
+      - name: Integration test using curl and jq
+        run: |
+          echo ${{ env.URL }}
+          echo "------------------------------------------"
+          curl https://${{ env.URL }}/live -s -k | jq -r .status | grep -i live
