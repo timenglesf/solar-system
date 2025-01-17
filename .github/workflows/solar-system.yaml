@@ -152,7 +152,7 @@ jobs:
 
   dev-deploy:
     needs: docker
-    if: contains(github.ref, "feature")
+    if: contains(github.ref, 'feature')
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -219,7 +219,7 @@ jobs:
 
   dev-integration-test:
     needs: dev-deploy
-    if: contains(github.ref, "feature")
+    if: contains(github.ref, 'feature')
     runs-on: ubuntu-latest
     env:
       URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_HOST }}
@@ -232,7 +232,7 @@ jobs:
 
   prod-deploy:
     needs: docker
-    if: github.ref == "refs/head/main"
+    if: github.ref == 'refs/head/main'
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -299,7 +299,7 @@ jobs:
 
   prod-integration-test:
     needs: prod-deploy
-    if: github.ref == "refs/head/main"
+    if: github.ref == 'refs/head/main'
     runs-on: ubuntu-latest
     env:
       URL: ${{ needs.prod-deploy.outputs.APP_INGRESS_HOST }}
