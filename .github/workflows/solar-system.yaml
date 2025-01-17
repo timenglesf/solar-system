@@ -153,8 +153,13 @@ jobs:
   dev-deploy:
     needs: docker
     runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://${{ steps.ingress_host.outputs.APP_INGRESS_HOST }}
+
     outputs:
       APP_INGRESS_HOST: ${{ steps.ingress_host.outputs.APP_INGRESS_HOST }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
