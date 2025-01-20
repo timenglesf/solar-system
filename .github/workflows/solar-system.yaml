@@ -175,6 +175,9 @@ jobs:
     needs: docker
     if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/reuse-deployment.yaml
+    secrets:
+      k8s-kubeconfig: ${{ secrets.KUBECONFIG }}
+      mongodb-password: ${{ secrets.MONGO_PASSWORD }}
 
   prod-integration-test:
     needs: prod-deploy
